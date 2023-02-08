@@ -70,10 +70,10 @@ docker/login:
 
 .PHONY: docker/build
 docker/build: docker/login ## Makes the Docker build and takes care of the remote cache by target
-ifdef PROJECT_VESION
+ifdef PROJECT_VERSION
 	@docker image build \
     --build-arg BUILDKIT_INLINE_CACHE=1 \
-    --build-arg VERSION=$(PROJECT_VERSION) \
+    --build-arg VERSION=v$(PROJECT_VERSION)+$(PROJECT_CHANGESET) \
     --cache-from $(DOCKER_IMAGE):latest \
     --tag $(DOCKER_IMAGE):$(PROJECT_CHANGESET) \
     --tag $(DOCKER_IMAGE):latest \
