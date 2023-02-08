@@ -40,15 +40,13 @@ clean: ## Clean the project executable
 	@$(GO) clean -v ./...
 	@rm -f $(EXECUTABLE)
 
-$(EXECUTABLE): $(PROJECT_MAIN)
-ifdef PROJECT_VERSION
-	@$(GO) build -v -ldflags "-X 'main.Version=$(PROJECT_VERSION)'" -o $(EXECUTABLE) $<
-else
-	@$(GO) build -v -ldflags "-X 'main.Version=$(PROJECT_CHANGESET)'" -o $(EXECUTABLE) $<
-endif
-
 .PHONY: build
-build: $(EXECUTABLE) ## Build the project
+build: ## Build the project
+ifdef PROJECT_VERSION
+	@$(GO) build -v -ldflags="-X github.com/jjuarez/simple-prober/cmd.Version='v$(PROJECT_VERSION)+$(PROJECT_CHANGESET)'" -o $(EXECUTABLE) main.go
+else
+	@$(GO) build -v -ldflags="-X github.com/jjuarez/simple-prober/cmd.Version='$(PROJECT_CHANGESET)'" -o $(EXECUTABLE) main.go
+endif
 
 .PHONY: test
 test: ## Unit tests
