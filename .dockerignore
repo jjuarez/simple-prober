@@ -1,0 +1,12 @@
+.git
+.gitignore
+.dockerignore
+.ci
+dist
+Dockerfile
+Makefile
+Makefile.mk
+README.md
+CHANGELOG.md
+LICENSE
+**/*_test.go

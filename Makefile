@@ -3,16 +3,21 @@
 .DEFAULT_GOAL  := help
 .DEFAULT_SHELL := /bin/bash
 
-GOARCH        := $(shell go env GOARCH)
-GOOS          := $(shell go env GOOS)
-GO            := $(GOBIN)/go
-GOTEST        ?= $(shell command -v gotest 2>/dev/null)
-GOLINT        ?= $(shell command -v golangci-lint 2>/dev/null)
-PROJECT_MAIN  := $(shell find . -type f -name main.go 2>/dev/null)
-#EXECUTABLE    ?= dist/simple-prober-$(GOOS)_$(GOARCH)
-EXECUTABLE    ?= dist/simple-prober
+GOARCH                    := $(shell go env GOARCH)
+GOOS                      := $(shell go env GOOS)
+GO                        := $(GOBIN)/go
+GOTEST                    ?= $(shell command -v gotest 2>/dev/null)
+GOLINT                    ?= $(shell command -v golangci-lint 2>/dev/null)
+EXECUTABLE                ?= dist/simple-prober
+#EXECUTABLE               ?= dist/simple-prober-$(GOOS)_$(GOARCH)
+
+DOCKER_REGISTRY           ?= docker.io
+DOCKER_REGISTRY_NAMESPACE ?= jjuarez
+DOCKER_SERVICE_NAME       ?= simple-prober
+DOCKER_IMAGE              := $(DOCKER_REGISTRY)/$(DOCKER_REGISTRY_NAMESPACE)/$(DOCKER_SERVICE_NAME)
 
 PROJECT_CHANGESET := $(shell git rev-parse --verify HEAD 2>/dev/null)
+
 
 define assert-set
 	@$(if $($1),,$(error $(1) environment variable is not defined))
@@ -25,6 +30,7 @@ endef
 define assert-file
 	@$(if $(wildcard $($1) 2>/dev/null),,$(error $($1) does not exist))
 endef
+
 
 .PHONY: help
 help: ## Shows this pretty help screen
@@ -54,4 +60,43 @@ ifdef GOTEST
 	@$(GOTEST) -v ./...
 else
 	@$(GO) test -v ./...
+endif
+
+.PHONY: docker/login
+docker/login:
+	$(call assert-set,DOCKER_USERNAME)
+	$(call assert-set,DOCKER_TOKEN)
+	@echo $(DOCKER_TOKEN)|docker login --username $(DOCKER_USERNAME) --password-stdin $(DOCKER_REGISTRY)
+
+.PHONY: docker/build
+docker/build: docker/login ## Makes the Docker build and takes care of the remote cache by target
+ifdef PROJECT_VESION
+	@docker image build \
+    --build-arg BUILDKIT_INLINE_CACHE=1 \
+    --build-arg VERSION=$(PROJECT_VERSION) \
+    --cache-from $(DOCKER_IMAGE):latest \
+    --tag $(DOCKER_IMAGE):$(PROJECT_CHANGESET) \
+    --tag $(DOCKER_IMAGE):latest \
+    --file Dockerfile \
+    .
+else
+	@docker image build \
+    --build-arg BUILDKIT_INLINE_CACHE=1 \
+    --build-arg VERSION=$(PROJECT_CHANGESET) \
+    --cache-from $(DOCKER_IMAGE):latest \
+    --tag $(DOCKER_IMAGE):$(PROJECT_CHANGESET) \
+    --tag $(DOCKER_IMAGE):latest \
+    --file Dockerfile \
+    .
+endif
+	@docker image push $(DOCKER_IMAGE):latest
+
+.PHONY: docker/release
+docker/release: docker/build ## Builds and release over the Docker registry the image
+	@docker image push $(DOCKER_IMAGE):$(PROJECT_CHANGESET)
+ifdef PROJECT_VERSION
+	@docker image tag  $(DOCKER_IMAGE):$(PROJECT_CHANGESET) $(DOCKER_IMAGE):$(PROJECT_VERSION)
+	@docker image push $(DOCKER_IMAGE):$(PROJECT_VERSION)
+else
+	$(warning The release rule should have a PROJECT_VERSION defined)
 endif
