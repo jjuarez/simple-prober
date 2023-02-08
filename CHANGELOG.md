@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 ### Fixed
+* The Docker releases having `PROJECT_VERSION`
 
 
 ## [0.0.0] - 2023-02-08
