@@ -9,9 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.1.0] - 2023-02-08
 ### Added
+* Docker support
+* helm deployment support
 
 ### Changed
-* Minor changes to adjust the versions
+* Minor changes to adjust the version generation
 
 ### Removed
 
