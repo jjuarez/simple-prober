@@ -12,8 +12,10 @@ RUN GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -v -ldflags="-X 'github.com/j
 
 FROM alpine:3.16 AS runtime
 
-WORKDIR /
+WORKDIR /app
+RUN mkdir -p config
 USER 1001
 COPY --from=builder --chown=1001:1001 /build/dist/simple-prober ./simple-prober
-VOLUME /config
-CMD [ "/simple-prober", "--version" ]
+VOLUME /app/config
+ENTRYPOINT [ "/app/simple-prober" ]
+CMD [ "check", "--config", "/app/config/endpoints.yaml" ]
