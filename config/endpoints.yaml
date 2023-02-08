@@ -1,20 +1,5 @@
 ---
-- name: IQX
-  kind: PostgreSQL
-  address: fe26780d-caec-4bc3-b7d4-62d59f0acd41.c2f3lg8w0g8s0rkj98i0.databases.appdomain.cloud:30516
-- name: MCS
-  kind: PostgreSQL
-  address: 0a14c8f3-e374-49a6-910e-2861567bf2e1.blrrvkdw0thh68l98t20.databases.appdomain.cloud:32295
-- name: Jaeger
-  kind: ElasticSearch
-  address: 501befef-7445-4aa2-9717-0b8d38bab098.blrrvkdw0thh68l98t20.databases.appdomain.cloud:32653
-- name: AoT PayloadQueue
-  kind: redis
-  address: f4a36445-bcbe-4adc-8bf6-9b797323f86e.2adb0220806343e3ae11df79c89b377f.databases.appdomain.cloud:32184
-- name: AoT Calibrations
-  kind: PostgreSQL
-  address: 50bd8cac-e9fa-4323-ae7e-e384c6a81041.brjdfmfw09op3teml03g.databases.appdomain.cloud:32396
-- name: AoT JostStatus
-  kind: PostgreSQL
-  address: 1c9c4f6a-442a-4199-b5fe-ba4de2a4a6bb.3c7f6c12a66c4324800651be37a77ceb.databases.appdomain.cloud:32474
+- name: Google
+  kind: Web
+  address: www.google.com:80
 ...
