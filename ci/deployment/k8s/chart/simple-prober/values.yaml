@@ -1,0 +1,36 @@
+---
+name: simple-prober
+istio: false
+cron:
+  scheduledExpression: "0 * * * *"
+  failedJobsHistoryLimit: 3
+  concurrencyPolicy: Replace
+
+image:
+  repository: docker.io
+  namespace: jjuarez
+  name: simple-prober
+  pullPolicy: Always
+  tag: latest
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+podAnnotations: {}
+podSecurityContext: {}
+securityContext: {}
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 64Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

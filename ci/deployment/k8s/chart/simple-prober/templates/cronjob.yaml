@@ -1,0 +1,42 @@
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ .Values.name }}
+  labels:
+    app-group: sre
+    name: {{ .Values.name }}
+    type: cronjob
+spec:
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          {{- with .Values.annotations }}
+          annotations:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+        spec:
+          containers:
+            - name: {{ .Values.name }}
+              image: {{ .Values.image.repository }}/{{ .Values.image.namespace }}/{{ .Values.image.name }}:{{ .Values.image.tag }}
+              imagePullPolicy: {{ .Values.image.pullPolicy }}
+              {{- with .Values.resources }}
+              resources:
+                {{- toYaml . | nindent 16 }}
+              {{- end }}
+              volumeMounts:
+                - name: config-volume
+                  mountPath: /app/config
+          volumes:
+            - name: config-volume
+              configMap:
+                name: simple-prober-icd-endpoints
+                optional: true
+                items:
+                  - key: endpoints
+                    path: endpoints.yaml
+          restartPolicy: OnFailure
+  schedule: {{ .Values.cron.scheduledExpression | quote }}
+  failedJobsHistoryLimit: {{ .Values.cron.failedJobsHistoryLimit | default 3 }}
+  concurrencyPolicy: {{ .Values.cron.concurrencyPolicy }}
