@@ -34,7 +34,7 @@ func New(name string, kind string, address string) *Endpoint {
 
 // String Implements the Stingable interface for Endpoint.
 func (e Endpoint) String() string {
-	return fmt.Sprintf("%T: { name:%s, kind:%s, address:%s }", e, e.Name, e.Kind, e.Address)
+	return fmt.Sprintf("%T(name:%s, kind:%s, address:%s)", e, e.Name, e.Kind, e.Address)
 }
 
 // Println Implements the Printable interface for Endpoint.

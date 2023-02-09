@@ -2,8 +2,8 @@
 package cmd
 
 import (
-	"os"
-
+	"github.com/jjuarez/simple-prober/internal/codes"
+	"github.com/jjuarez/simple-prober/internal/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -27,10 +27,9 @@ var rootCmd = &cobra.Command{
 func Execute() {
 	err := rootCmd.Execute()
 	if err != nil {
-		os.Exit(1)
+		utils.ExitCommand(codes.UnknownError, err)
 	}
 }
 
 func init() {
-	// Init of the commands.
 }

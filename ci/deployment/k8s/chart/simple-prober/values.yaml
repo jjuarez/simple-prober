@@ -2,7 +2,7 @@
 name: simple-prober
 istio: false
 cron:
-  scheduledExpression: "0 * * * *"
+  scheduledExpression: "* * * * *"
   failedJobsHistoryLimit: 3
   concurrencyPolicy: Replace
 

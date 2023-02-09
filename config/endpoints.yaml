@@ -2,4 +2,7 @@
 - name: Google
   kind: Web
   address: www.google.com:80
+- name: Fail
+  kind: Web
+  address: www.example.com:8445
 ...

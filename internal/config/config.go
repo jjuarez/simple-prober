@@ -11,7 +11,6 @@ import (
 	yaml "gopkg.in/yaml.v3"
 )
 
-// LoadFile This function load the content of the configuration file.
 func loadFile(configFileName string) ([]byte, error) {
 	var err error
 	var fileContent []byte

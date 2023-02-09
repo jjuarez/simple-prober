@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 
+## [0.2.0] - 2023-02-09
+### Added
+* Logging support using [logrus](https://github.com/sirupsen/logrus)
+
+### Changed
+* Minor changes to adjust the version generation
+
+### Removed
+
+### Fixed
+* The exit from all the commands should be controlled
+
+
 ## [0.1.0] - 2023-02-08
 ### Added
 * Docker support
@@ -32,6 +45,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 
-[Unreleased]: https://github.com/jjuarez/simple-prober/compare/0.1.0...HEAD
+[Unreleased]: https://github.com/jjuarez/simple-prober/compare/0.2.0...HEAD
+[0.2.0]: https://github.com/jjuarez/simple-prober/compare/0.1.0...0.2.0
 [0.1.0]: https://github.com/jjuarez/simple-prober/compare/0.0.0...0.1.0
 [0.0.0]: https://github.com/jjuarez/simple-prober/tree/0.0.0

@@ -1,0 +1,7 @@
+---
+name: simple-prober
+cron:
+  scheduledExpression: "0 * * * *"
+
+image:
+  tag: latest
