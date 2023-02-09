@@ -3,11 +3,13 @@ package cmd
 
 import (
 	"fmt"
+	"sync"
 	"time"
 
 	"github.com/jjuarez/simple-prober/internal/codes"
 	"github.com/jjuarez/simple-prober/internal/config"
 	"github.com/jjuarez/simple-prober/internal/logger"
+	"github.com/jjuarez/simple-prober/internal/model"
 	"github.com/jjuarez/simple-prober/internal/utils"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
@@ -24,6 +26,31 @@ var (
 	timeout        time.Duration
 	logLevel       string
 )
+
+func doTests(endpoints []model.Endpoint) map[string]bool {
+	start := time.Now()
+	defer func() {
+		log.Info(fmt.Sprintf("Execution time: %s", time.Since(start)))
+	}()
+
+	connectionResults := make(map[string]bool, len(endpoints))
+	wg := sync.WaitGroup{}
+	// Connection tests
+	for _, e := range endpoints {
+		wg.Add(1)
+		go func(e model.Endpoint) {
+			r, err := e.Connect(timeout)
+			if err != nil {
+				return
+			}
+			connectionResults[e.Name] = r
+			log.Debug(fmt.Sprintf("Tested: %s, with result: %v", e.Name, r))
+			wg.Done()
+		}(e)
+	}
+	wg.Wait()
+	return connectionResults
+}
 
 // checkCmd represents the check command
 var checkCmd = &cobra.Command{
@@ -43,15 +70,8 @@ var checkCmd = &cobra.Command{
 		if err != nil {
 			utils.ExitCommand(codes.ReadError, err)
 		}
-
-		// Connection tests
-		for _, e := range *eList {
-			r, err := e.TestConnection(timeout)
-			if err != nil {
-				log.Error(err)
-			}
-			log.Info(fmt.Sprintf("%v, %v\n", e, r))
-		}
+		results := doTests(*eList)
+		log.Info(results)
 	},
 }
 
@@ -59,13 +79,10 @@ func init() {
 	var parameterTimeout int
 
 	rootCmd.AddCommand(checkCmd)
-
 	// The log level
 	rootCmd.PersistentFlags().StringVar(&logLevel, "loglevel", defaultLogLevel, "The log level")
-
 	// The confiuration file name
 	rootCmd.PersistentFlags().StringVar(&configFileName, "config", defaultConfigFileName, "Config file (default is: config/endpoints.yaml)")
-
 	// The connection timeout
 	rootCmd.PersistentFlags().IntVar(&parameterTimeout, "timeout", defaultTimeout, "Connection timeout")
 	timeout = time.Duration(parameterTimeout) * time.Second
