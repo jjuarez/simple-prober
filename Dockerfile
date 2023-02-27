@@ -18,4 +18,4 @@ USER 1001
 COPY --from=builder --chown=1001:1001 /build/dist/simple-prober ./simple-prober
 VOLUME /app/config
 ENTRYPOINT [ "/app/simple-prober" ]
-CMD [ "check", "--config", "/app/config/endpoints.yaml" ]
+CMD [ "check", "--config", "/app/config/endpoints.yaml", "--timeout", "5", "--loglevel", "debug" ]
