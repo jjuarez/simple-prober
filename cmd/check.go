@@ -41,6 +41,7 @@ func doTests(endpoints []model.Endpoint) map[string]bool {
 		go func(e model.Endpoint) {
 			r, err := e.Connect(timeout)
 			if err != nil {
+				log.Error(fmt.Sprintf("%s error: %v", e.Name, err))
 				return
 			}
 			connectionResults[e.Name] = r
