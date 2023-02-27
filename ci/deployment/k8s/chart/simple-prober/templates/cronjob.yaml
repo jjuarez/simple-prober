@@ -12,6 +12,8 @@ spec:
     spec:
       template:
         metadata:
+          labels:
+            {{ .Values.name }}: cronjob
           {{- with .Values.annotations }}
           annotations:
             {{- toYaml . | nindent 12 }}
@@ -40,3 +42,4 @@ spec:
   schedule: {{ .Values.cron.scheduledExpression | quote }}
   failedJobsHistoryLimit: {{ .Values.cron.failedJobsHistoryLimit | default 3 }}
   concurrencyPolicy: {{ .Values.cron.concurrencyPolicy }}
+...
