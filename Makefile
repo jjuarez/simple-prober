@@ -15,6 +15,7 @@ DOCKER_REGISTRY           ?= docker.io
 DOCKER_REGISTRY_NAMESPACE ?= jjuarez
 DOCKER_SERVICE_NAME       ?= simple-prober
 DOCKER_IMAGE              := $(DOCKER_REGISTRY)/$(DOCKER_REGISTRY_NAMESPACE)/$(DOCKER_SERVICE_NAME)
+DOCKER_TARGET             ?= runtime
 
 PROJECT_CHANGESET := $(shell git rev-parse --verify HEAD 2>/dev/null)
 
@@ -69,7 +70,7 @@ docker/login:
 	@echo $(DOCKER_TOKEN)|docker login --username $(DOCKER_USERNAME) --password-stdin $(DOCKER_REGISTRY)
 
 .PHONY: docker/build
-docker/build: docker/login ## Makes the Docker build and takes care of the remote cache by target
+docker/build: ## Makes the Docker build and takes care of the remote cache by target
 ifdef PROJECT_VERSION
 	@docker image build \
     --build-arg BUILDKIT_INLINE_CACHE=1 \
@@ -77,6 +78,7 @@ ifdef PROJECT_VERSION
     --cache-from $(DOCKER_IMAGE):latest \
     --tag $(DOCKER_IMAGE):$(PROJECT_CHANGESET) \
     --tag $(DOCKER_IMAGE):latest \
+    --target $(DOCKER_TARGET) \
     --file Dockerfile \
     .
 else
