@@ -1,11 +1,11 @@
 .git
 .gitignore
 .dockerignore
-.ci
+.envrc
+ci
 dist
 Dockerfile
 Makefile
-Makefile.mk
 README.md
 CHANGELOG.md
 LICENSE
