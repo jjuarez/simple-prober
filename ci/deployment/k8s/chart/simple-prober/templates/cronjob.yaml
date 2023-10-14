@@ -33,7 +33,7 @@ spec:
           volumes:
             - name: config-volume
               configMap:
-                name: simple-prober-icd-endpoints
+                name: {{ .Values.config.configMapName | default "simple-prober-endpoints" }}
                 optional: true
                 items:
                   - key: endpoints
