@@ -10,6 +10,7 @@ const (
 
 	// ReadError ...
 	ReadError Code = 1001
+
 	// UnmarshalError ...
 	UnmarshalError Code = 1002
 
