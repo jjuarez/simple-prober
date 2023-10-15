@@ -10,8 +10,8 @@ GOLINT                    ?= $(shell command -v golangci-lint 2>/dev/null)
 EXECUTABLE                ?= dist/simple-prober
 #EXECUTABLE               ?= dist/simple-prober-$(GOOS)_$(GOARCH)
 
-DOCKER_REGISTRY           ?= docker.io
-DOCKER_REGISTRY_NAMESPACE ?= jjuarez
+DOCKER_REGISTRY           ?= icr.io
+DOCKER_REGISTRY_NAMESPACE ?= qc-production-ext-images
 DOCKER_SERVICE_NAME       ?= simple-prober
 DOCKER_IMAGE              := $(DOCKER_REGISTRY)/$(DOCKER_REGISTRY_NAMESPACE)/$(DOCKER_SERVICE_NAME)
 DOCKER_TARGET             ?= runtime
@@ -58,11 +58,10 @@ endif
 test: ## Unit tests
 	@$(GO) test -v ./...
 
-.PHONY: docker/login
-docker/login:
-	$(call assert-set,DOCKER_USERNAME)
-	$(call assert-set,DOCKER_TOKEN)
-	@echo $(DOCKER_TOKEN)|docker login --username $(DOCKER_USERNAME) --password-stdin $(DOCKER_REGISTRY)
+.PHONY: icr.io/login
+icr.io/login:
+	$(call assert-set,IBMCLOUD_API_KEY)
+	@echo $(IBMCLOUD_API_KEY)|docker login --username iamapikey --password-stdin $(DOCKER_REGISTRY)
 
 .PHONY: docker/build
 docker/build: ## Makes the Docker build and takes care of the remote cache by target
