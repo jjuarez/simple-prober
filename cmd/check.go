@@ -16,9 +16,9 @@ import (
 )
 
 const (
-	defaultConfigFileName string = "./config/endpoints.yaml"
+	defaultConfigFileName string = "endpoints.yaml"
 	defaultTimeout        int    = 5
-	defaultLogLevel       string = "info"
+	defaultLogLevel       string = "debug"
 )
 
 var (
@@ -83,7 +83,7 @@ func init() {
 	// The log level
 	rootCmd.PersistentFlags().StringVar(&logLevel, "loglevel", defaultLogLevel, "The log level")
 	// The confiuration file name
-	rootCmd.PersistentFlags().StringVar(&configFileName, "config", defaultConfigFileName, "Config file (default is: config/endpoints.yaml)")
+	rootCmd.PersistentFlags().StringVar(&configFileName, "config", defaultConfigFileName, "Config file (default is: endpoints.yaml)")
 	// The connection timeout
 	rootCmd.PersistentFlags().IntVar(&parameterTimeout, "timeout", defaultTimeout, "Connection timeout")
 	timeout = time.Duration(parameterTimeout) * time.Second
