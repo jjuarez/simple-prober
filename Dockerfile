@@ -15,6 +15,8 @@ FROM alpine:3.18.4 AS runtime
 ARG UID=1001
 
 COPY --from=builder --chown=1001:1001 /build/dist/simple-prober /usr/local/bin/simple-prober
+WORKDIR /app
+RUN mkdir -p config
 USER ${UID}
-VOLUME /endpoints.yaml
-CMD [ "simple-prober", "check", "--config", "/endpoints.yaml", "--timeout", "5", "--loglevel", "debug" ]
+VOLUME config/endpoints.yaml
+CMD [ "simple-prober", "check", "--config", "config/endpoints.yaml", "--timeout", "5", "--loglevel", "debug" ]

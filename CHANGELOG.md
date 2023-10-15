@@ -6,6 +6,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.1] - 2023-10-15
+### Added
+* The version command
+
+### Changed
+* The target container registry to icr global
+
+### Removed
+* Now the test relies only to the standard tool
+
+### Fixed
+
+
 ## [0.3.0] - 2023-10-15
 ### Added
 * Minimal support for GitHub actions
@@ -83,7 +96,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 
-[Unreleased]: https://github.com/jjuarez/simple-prober/compare/0.3.0...HEAD
+[Unreleased]: https://github.com/jjuarez/simple-prober/compare/0.3.1...HEAD
+[0.3.1]: https://github.com/jjuarez/simple-prober/compare/0.3.0...0.3.1
 [0.3.0]: https://github.com/jjuarez/simple-prober/compare/0.2.2...0.3.0
 [0.2.2]: https://github.com/jjuarez/simple-prober/compare/0.2.1...0.2.2
 [0.2.1]: https://github.com/jjuarez/simple-prober/compare/0.2.0...0.2.1

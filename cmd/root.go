@@ -7,17 +7,11 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var (
-	// Version ...
-	Version string = "v0.0.0+unknown"
-)
-
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:     "simple-prober",
-	Version: Version,
-	Short:   "simple-prober - a really simple TPC tester",
-	Long:    `This utility will allow you to test several TCP endpoints provided by a configuration file.`,
+	Use:   "simple-prober",
+	Short: "simple-prober - a really simple TPC tester",
+	Long:  `This utility will allow you to test several TCP endpoints provided by a configuration file.`,
 	Run: func(cmd *cobra.Command, arg []string) {
 	},
 }

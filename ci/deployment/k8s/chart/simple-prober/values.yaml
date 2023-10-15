@@ -10,10 +10,10 @@ cron:
   concurrencyPolicy: Replace
 
 image:
-  repository: docker.io
-  namespace: jjuarez
-  name: simple-prober
   pullPolicy: Always
+  repository: icr.io
+  namespace: qc-production-ext-images
+  name: simple-prober
   tag: latest
 
 imagePullSecrets: []
