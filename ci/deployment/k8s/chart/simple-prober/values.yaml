@@ -1,6 +1,9 @@
 ---
 name: simple-prober
 istio: false
+config:
+  configMapName: simple-prober-endpoints
+
 cron:
   scheduledExpression: "* * * * *"
   failedJobsHistoryLimit: 3

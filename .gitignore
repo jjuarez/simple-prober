@@ -26,6 +26,6 @@ dist/*
 go.work
 
 # Real endpoints configurations
-*-endpoints.yaml
+**/endpoints.yaml
 
 # End of https://www.toptal.com/developers/gitignore/api/go

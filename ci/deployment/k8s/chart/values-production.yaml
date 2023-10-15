@@ -1,0 +1,14 @@
+---
+name: simple-prober
+cron:
+  scheduledExpression: "0 * * * *"
+
+image:
+  repository: us.icr.io
+  namespace: qc-production-ext-images
+  name: simple-prober
+  pullPolicy: Always
+  tag: 0.3.0
+
+imagePullSecrets:
+  - name: all-icr-io
