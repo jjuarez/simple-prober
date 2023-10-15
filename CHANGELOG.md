@@ -6,7 +6,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.0] - 2023-10-15
+### Added
+* Minimal support for GitHub actions
 
+### Changed
+* Updates the project base to Go `1.21`
+* Better way to deal with the endpoint configuration from the container
+* Default log level to debug
+
+### Removed
+
+### Fixed
+
+
+## [0.2.2] - 2023-02-27
+### Added
+* Complete commmand line
+* Additional label
+
+### Changed
+* Improve the log messages when a connection fails
+
+### Removed
+
+### Fixed
+
+  
 ## [0.2.1] - 2023-02-09
 ### Added
 * Adds a new way to test the endpoints in parallel mode
@@ -57,7 +83,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 
-[Unreleased]: https://github.com/jjuarez/simple-prober/compare/0.2.1...HEAD
+[Unreleased]: https://github.com/jjuarez/simple-prober/compare/0.3.0...HEAD
+[0.3.0]: https://github.com/jjuarez/simple-prober/compare/0.2.2...0.3.0
+[0.2.2]: https://github.com/jjuarez/simple-prober/compare/0.2.1...0.2.2
 [0.2.1]: https://github.com/jjuarez/simple-prober/compare/0.2.0...0.2.1
 [0.2.0]: https://github.com/jjuarez/simple-prober/compare/0.1.0...0.2.0
 [0.1.0]: https://github.com/jjuarez/simple-prober/compare/0.0.0...0.1.0
