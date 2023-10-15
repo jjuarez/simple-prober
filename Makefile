@@ -6,7 +6,6 @@
 GOARCH                    := $(shell go env GOARCH)
 GOOS                      := $(shell go env GOOS)
 GO                        := $(GOBIN)/go
-GOTEST                    ?= $(shell command -v gotest 2>/dev/null)
 GOLINT                    ?= $(shell command -v golangci-lint 2>/dev/null)
 EXECUTABLE                ?= dist/simple-prober
 #EXECUTABLE               ?= dist/simple-prober-$(GOOS)_$(GOARCH)
@@ -57,11 +56,7 @@ endif
 
 .PHONY: test
 test: ## Unit tests
-ifdef GOTEST
-	@$(GOTEST) -v ./...
-else
 	@$(GO) test -v ./...
-endif
 
 .PHONY: docker/login
 docker/login:
