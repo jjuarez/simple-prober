@@ -4,11 +4,11 @@ cron:
   scheduledExpression: "0 * * * *"
 
 image:
-  repository: us.icr.io
+  pullPolicy: Always
+  repository: icr.io
   namespace: qc-production-ext-images
   name: simple-prober
-  pullPolicy: Always
-  tag: 0.3.0
+  tag: latest
 
 imagePullSecrets:
   - name: all-icr-io
